@@ -9,4 +9,7 @@ const categoryReturnSerializer = yup.object().shape({
     name: yup.string(),
 })
 
-export { createCategorySerializer, categoryReturnSerializer}
+const listAllCategoriesSerializer = yup.array(categoryReturnSerializer)
+
+
+export { createCategorySerializer, categoryReturnSerializer, listAllCategoriesSerializer}

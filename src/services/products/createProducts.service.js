@@ -1,35 +1,19 @@
 import database from "../../database";
-import AppError from "../../errors/appError";
-import { categoryReturnSerializer } from "../../serializers/categories.serializers";
+import { productReturnSerializer } from "../../serializers/products.serializers";
 
-const createCategoryService = async (userData) => {
-
-    const findCategory = await database.query(
-        `SELECT 
-            * 
-        FROM 
-            categories
-        WHERE
-            name = $1;
-        `,
-        [userData.name]
-    )
-
-    if(findCategory.rowCount > 0) {
-        throw new AppError("Category already exists", 400)
-    }
+const createProductService = async (productData) => {
 
     const queryResponse = await database.query(
         `INSERT INTO 
-            categories(name)
+            products(name, price, category_id)
         VALUES
-            ($1)
+            ($1, $2, $3)
         RETURNING *;
         `,
-        [userData.name]
+        [productData.name, productData.price, productData.category_id]
     )
-    const  returnedCategory = await categoryReturnSerializer.validate(queryResponse.rows[0])
-    return returnedCategory
+    const  returnedProduct = await productReturnSerializer.validate(queryResponse.rows[0])
+    return returnedProduct
 }
 
-export default createCategoryService
+export default createProductService

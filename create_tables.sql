@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS categories(
 );
 
 CREATE TABLE IF NOT EXISTS products (
-	id BIGSERIAL PRIMARY KEY,
+	id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	name VARCHAR(200) NOT NULL,
 	price DECIMAL(8,2) NOT NULL,
 	category_id INTEGER,

@@ -1,5 +1,3 @@
-
-
 const validateDataMiddleware = (schema) => async (req, res, next) => {
 
     try {
